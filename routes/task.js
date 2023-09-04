@@ -4,7 +4,8 @@ import {
     newTask,
     getMyTasks,
     udpateTask,
-    deleteTask
+    deleteTask,
+    editTask
 } from "../controllers/task.js"
 
 const router = express.Router()
@@ -17,5 +18,7 @@ router
     .route('/:taskId')
     .put(isAuthenticated, udpateTask)
     .delete(isAuthenticated, deleteTask)
+
+router.put("/editTask/:taskId", isAuthenticated, editTask)
 
 export default router

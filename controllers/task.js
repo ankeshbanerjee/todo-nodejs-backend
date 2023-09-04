@@ -55,6 +55,28 @@ export const udpateTask = async (req, res, next) => {
   }
 };
 
+export const editTask = async (req, res, next) => {
+  try {
+    const id = req.params.taskId;
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return next(new ErrorHandler("Task not found!", 404));
+    }
+
+    const { title, description } = req.body;
+    task.title = title;
+    task.description = description;
+    await task.save();
+    res.status(200).json({
+      success: true,
+      message: "task edited successfully!",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteTask = async (req, res, next) => {
   try {
     const id = req.params.taskId;
